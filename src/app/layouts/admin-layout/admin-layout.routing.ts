@@ -106,9 +106,6 @@ export const AdminLayoutRoutes: Routes = [
     /*{
         path: "ownerVehicles", //Path que carga la pagina
         loadChildren: () => import('src/app/pages/owner-vehicle/owner-vehicle.module').then(m => m.PaymentModule)
-    }*/
-    
-    
-      
+    }*/   
 ];
 
