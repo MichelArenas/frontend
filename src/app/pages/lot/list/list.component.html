@@ -22,14 +22,13 @@
                 <th scope="col-1">Id</th>
                 <th scope="col-2">Peso</th>
                 <th scope="col-3">Cantidad x kilo</th>
-                <th scope="col-3">Cantidad x kilo</th>
                 <th scope="col-3">Ruta</th>
                 <th scope="col-4">Orden</th>
                 <th scope="col-4">Opciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let batch of lots">
+              <tr *ngFor="let lot of lots">
                 <td>{{ lot.id }}</td>
                 <td>{{ lot.weight }}</td>
                 <td>{{ lot.quantity_kg }}</td>
@@ -38,9 +37,9 @@
 
                 
                 <td>
-                  <button type="button" class="btn btn-primary" (click)="view(batch.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(batch.id)">Actualizar</button>
-                  <button type="button" class="btn btn-danger" (click)="delete(batch.id)">Eliminar</button>
+                  <button type="button" class="btn btn-primary" (click)="view(lot.id)">Ver</button>
+                  <button type="button" class="btn btn-warning" (click)="update(lot.id)">Actualizar</button>
+                  <button type="button" class="btn btn-danger" (click)="delete(lot.id)">Eliminar</button>
                 </td>
               </tr>
             </tbody>
