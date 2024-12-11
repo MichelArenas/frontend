@@ -15071,7 +15071,11 @@ button.bg-lighter:focus
 
 .bg-gradient-danger
 {
+<<<<<<< Updated upstream
     background: linear-gradient(87deg, #001f3f 0%, #007bff 100%) !important;
+=======
+    background: linear-gradient(87deg, #5e72e4 0, #f56036 100%) !important;
+>>>>>>> Stashed changes
 }
 
 .bg-gradient-light
