@@ -21,33 +21,42 @@ export const AdminLayoutRoutes: Routes = [
         loadChildren: () => import('src/app/pages/restaurants/restaurants.module').then(m => m.RestaurantsModule)
     },
     {
-        path: 'travelExpenses', //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/expenses/expenses.module').then(m => m.ExpensesModule)
+        path: 'Vehicles', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/vehicles/vehicles.module').then(m => m.VehiclesModule)
     },
     {
-        path: 'addresses', //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/addresses/addresses.module').then(m => m.AddressesModule)
+        path: 'contracts', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/contracts/contracts.module').then(m => m.ContractsModule)
     },
     {
-        path: 'administrators', //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/administrators/administrators.module').then(m => m.AdministratorsModule)
-
+        path: 'routes', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/routes/routes.module').then(m => m.RoutesModule)
     },
     {
-        path: 'operations', //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/operations/operations.module').then(m => m.OperationsModule)
-
+        path: 'orders', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/orders/orders.module').then(m => m.OrdersModule)
     },
     {
-        path: 'spents', //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/spents/spents.module').then(m => m.SpentsModule)
-
+        path: 'tranches', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/tranches/tranches.module').then(m => m.TranchesModule)
     },
     {
-        path: 'customers', //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/customers/customers.module').then(m => m.CustomersModule)
-
-    }
+        path: 'services', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/services/services.module').then(m => m.ServicesModule)
+    },
+    {
+        path: 'owners', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/owners/owners.module').then(m => m.OwnersModule)
+    },
+    {
+        path: 'drivers', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/drivers/drivers.module').then(m => m.DriversModule)
+    },
+    {
+        path: 'VehiclesDriver', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/vehicles-driver/vehicles-driver.module').then(m => m.VehiclesDriverModule)
+    },
+        
     
 ];
 
