@@ -103,10 +103,10 @@ export const AdminLayoutRoutes: Routes = [
         path: "naturalPeoples", //Path que carga la pagina
         loadChildren: () => import('src/app/pages/natural-person/natural-person.module').then(m => m.NaturalPersonModule)
     },
-    /*{
+    {
         path: "ownerVehicles", //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/owner-vehicle/owner-vehicle.module').then(m => m.PaymentModule)
-    }*/
+        loadChildren: () => import('src/app/pages/owner-vehicles/owner-vehicles.module').then(m => m.OwnerVehiclesModule)
+    }
     
     
       
