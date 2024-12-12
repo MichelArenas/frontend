@@ -48,7 +48,10 @@ export const AdminLayoutRoutes: Routes = [
         path: 'owners', //Path que carga la pagina
         loadChildren: () => import('src/app/pages/owners/owners.module').then(m => m.OwnersModule)
     },
-
+    {
+        path: 'ownerVehicles', //Path que carga la pagina
+        loadChildren: () => import('src/app/pages/owner-vehicles/owner-vehicles.module').then(m => m.OwnerVehiclesModule)
+    },
     {
         path: 'drivers', //Path que carga la pagina
         loadChildren: () => import('src/app/pages/drivers/drivers.module').then(m => m.DriversModule)
