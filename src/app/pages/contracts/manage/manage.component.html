@@ -29,9 +29,15 @@
                     <div class="row mb-1">
                         <div class="col-4"><label>Fecha:</label></div>
                         <div class="col-8">
-                            <input type="text" class="form-control" [(ngModel)]="contract.date" [disabled]="mode==1"/> 
+                            <input type="datetime-local" class="form-control" [(ngModel)]="contract.date" [disabled]="mode==1"/> 
                         </div>
                     </div>
+                    <!--<div class="row mb-1">
+                        <div class="col-4"><label>Cliente:</label></div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" [(ngModel)]="contract.customer_id" [disabled]="mode==1"/> 
+                        </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-4">
                             

@@ -12,8 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-//import { ListComponent } from './pages/OwnerVehicle/list/list.component';
-//import { ManageComponent } from './pages/OwnerVehicle/manage/manage.component';
+
 
 
 
@@ -33,8 +32,6 @@ import { ComponentsModule } from './components/components.module';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    //ListComponent,
-    //ManageComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

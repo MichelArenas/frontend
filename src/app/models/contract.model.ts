@@ -6,6 +6,7 @@ export class Contract {
     id?:number;
     description?: string;
     date: Date;
+    customer_id?:number;
     /*route:Route;
     order:Order
     service:Service*/

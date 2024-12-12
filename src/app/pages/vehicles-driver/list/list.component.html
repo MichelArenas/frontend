@@ -35,8 +35,8 @@
                                 <tr *ngFor="let actual of vehicledriver">
                                     <td>{{actual.id}}</td>
                                     <td>{{actual.assignment_date}}</td>
-                                    <td>{{actual.driver}}</td>
-                                    <td>{{actual.vehicle}}</td>
+                                    <td>{{actual.driver_id}}</td>
+                                    <td>{{actual.vehicle_id}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                         <button type="button" class="btn btn-warning" (click)="update(actual.id)">Actualizar</button>

@@ -48,6 +48,7 @@ export const AdminLayoutRoutes: Routes = [
         path: 'owners', //Path que carga la pagina
         loadChildren: () => import('src/app/pages/owners/owners.module').then(m => m.OwnersModule)
     },
+
     {
         path: 'drivers', //Path que carga la pagina
         loadChildren: () => import('src/app/pages/drivers/drivers.module').then(m => m.DriversModule)
@@ -84,7 +85,7 @@ export const AdminLayoutRoutes: Routes = [
         loadChildren: () => import('src/app/pages/customers/customers.module').then(m => m.CustomersModule)
 
     },
-    {path: 'products', //Path que carga la pagina
+    {   path: 'products', //Path que carga la pagina
         loadChildren: () => import('src/app/pages/products/products.module').then(m => m.ProductsModule)
     },
     {
@@ -103,10 +104,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "naturalPeoples", //Path que carga la pagina
         loadChildren: () => import('src/app/pages/natural-person/natural-person.module').then(m => m.NaturalPersonModule)
     },
-    {
-        path: "ownerVehicles", //Path que carga la pagina
-        loadChildren: () => import('src/app/pages/owner-vehicles/owner-vehicles.module').then(m => m.OwnerVehiclesModule)
-    }
+
     
     
       

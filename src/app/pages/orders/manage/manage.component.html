@@ -29,7 +29,19 @@
                     <div class="row mb-1">
                         <div class="col-4"><label>Fecha de orden:</label></div>
                         <div class="col-8">
-                            <input type="datetime" class="form-control" [(ngModel)]="order.date_order" [disabled]="mode==1"/> 
+                            <input type="datetime-local" class="form-control" [(ngModel)]="order.date_order" [disabled]="mode==1"/> 
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-4"><label>Dirección id:</label></div>
+                        <div class="col-8">
+                            <input type="number" class="form-control" [(ngModel)]="order.address_id" [disabled]="mode==1"/> 
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-4"><label>Ruta id:</label></div>
+                        <div class="col-8">
+                            <input type="number" class="form-control" [(ngModel)]="order.route_id" [disabled]="mode==1"/> 
                         </div>
                     </div>
                     
