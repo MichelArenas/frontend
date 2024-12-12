@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Administrator } from 'src/app/models/administrator.model';
 import { AdministratorService } from 'src/app/services/administrator.service';
@@ -11,86 +11,80 @@ import Swal from 'sweetalert2';
   styleUrls: ['./manage.component.css']
 })
 export class ManageComponent implements OnInit {
-  admins: Administrator;
-  mode: number; // mode=1 -> View, mode=2 -> create, mode=3 -> update
-  theFormGroup: FormGroup;
-  trySend: boolean; // Indica si la persona hizo un intento de enviar información
-
-  constructor(
-    private adminService: AdministratorService, // Servicio para Restaurants
-    private router: Router,
-    private activateRoute: ActivatedRoute,
-    private theFormBuilder: FormBuilder
-  ) {
-    this.admins = { id: 0, service_id:0, user_id:"" };
-    this.mode = 0;
-    this.configFormGroup();
-    this.trySend = false;
+  mode:number //mode=1 -> View, mode=2 -> create, mode=3-> update
+  administrator:Administrator
+  constructor(private activatedRoute:ActivatedRoute, 
+    private administratorService:AdministratorService,
+    private router:Router) { 
+    this.mode=1;
+    this.administrator={
+      id:0,
+      user_id:"",
+      //service_id: 0,
+      email:"",
+      password:"",
+      name:""
+    };
   }
 
   ngOnInit(): void {
-    const currentUrl = this.activateRoute.snapshot.url.join('/');
-    if (currentUrl.includes('view')) {
-      this.mode = 1; // Visualizar
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');//Tomar una foto y separar por /
+    if (currentUrl.includes('view')) { // Si en esa lista incluye la palabra view
+      this.mode = 1;
     } else if (currentUrl.includes('create')) {
-      this.mode = 2; // Crear
+      this.mode = 2;
     } else if (currentUrl.includes('update')) {
-      this.mode = 3; // Actualizar
+      this.mode = 3;
     }
-
-    if (this.activateRoute.snapshot.params.id) {
-      this.admins.id = this.activateRoute.snapshot.params.id;
-      this.getOperation(this.admins.id);
-    }
-
-    // Configurar el estado de los campos basado en el modo
-    this.setFormMode();
-  }
-
-  configFormGroup() {
-    this.theFormGroup = this.theFormBuilder.group({
-      id: [{ value: '', disabled: true }], // Siempre deshabilitado
-      user_id: ['', [Validators.required]],
-      service_id:['', [Validators.required]],
-    });
-  }
-
-  setFormMode() {
-    if (this.mode === 1) {
-      // Visualizar: Deshabilitar todos los campos
-      this.theFormGroup.disable();
-    } else if (this.mode === 2) {
-      // Crear: Habilitar todos los campos, incluido el ID
-      this.theFormGroup.enable();
-    } else if (this.mode === 3) {
-      // Actualizar: Habilitar todos los campos excepto el ID
-      this.theFormGroup.enable();
-      //this.theFormGroup.controls['id'].disable(); //organizar
+    if(this.activatedRoute.snapshot.params.id){
+      this.administrator.id = this.activatedRoute.snapshot.params.id
+      this.getAdministrator(this.administrator.id)
     }
   }
-
-  get getTheFormGroup() {
-    return this.theFormGroup.controls;
+  getAdministrator(id:number){
+    this.administratorService.view(id).subscribe(data=>{
+      this.administrator=data //El JSON corresponde a un dato
+      console.log("Conductor"+JSON.stringify(this.administrator))
+    })
   }
 
-  getOperation(id: number) {
-    this.adminService.view(id).subscribe((data) => {
-      this.admins = data;
-      this.theFormGroup.patchValue(this.admins); // Sincroniza datos del modelo con el formulario
+  create(){
+    Swal.fire({
+      title: "¿Quieres guardar los cambios?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "guardar",
+      denyButtonText: `No guardar`
+    }).then((result) => {
+      /*Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.administratorService.create(this.administrator).subscribe(data =>{
+          Swal.fire("guardados!", "Se ha creado correctamente", "success");
+          this.router.navigate(["administrators/list"])
+        })
+      } else if (result.isDenied) {
+        Swal.fire("Los cambios no se guardaron", "", "info");
+      }
+    });
+  }
+  update(){
+    Swal.fire({
+      title: "¿Quieres guardar los cambios?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "guardar",
+      denyButtonText: `No guardar`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.administratorService.update(this.administrator).subscribe(data =>{
+          Swal.fire("guardados!", "Se ha actualizado correctamente", "success");
+          this.router.navigate(["administrator/list"])
+        })
+      } else if (result.isDenied) {
+        Swal.fire("Los cambios no se guardaron", "", "info");
+      }
     });
   }
 
-  create() {
-    this.adminService.create(this.theFormGroup.value).subscribe(() => {
-      Swal.fire('Creado', 'Se ha creado exitosamente', 'success');
-      this.router.navigate(['administrators/list']);
-    });
-  }
-
-  update() {
-    this.adminService.update(this.theFormGroup.value).subscribe(() => {
-      Swal.fire('Actualizado', 'Se ha actualizado exitosamente', 'success');
-      this.router.navigate(['administrators/list']);
-    });
-  }
 }
