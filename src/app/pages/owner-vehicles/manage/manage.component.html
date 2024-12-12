@@ -17,34 +17,27 @@
                     <div class="row mb-1">
                         <div class="col-4"><label>Id:</label></div>
                         <div class="col-8">
-                            <input type="text" class="form-control" [(ngModel)]="order.id" disabled/>
+                            <input type="text" class="form-control" [(ngModel)]="ownerVehicle.id" disabled/>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-4"><label>Tipo:</label></div>
+                        <div class="col-4"><label>Fecha de asignación:</label></div>
                         <div class="col-8">
-                            <input type="text" class="form-control" [(ngModel)]="order.type" [disabled]="mode==1"/>
+                            <input type="date" class="form-control" [(ngModel)]="ownerVehicle.assignment_date" [disabled]="mode==1"/>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-4"><label>Fecha de orden:</label></div>
+                        <div class="col-4"><label>Propietario:</label></div>
                         <div class="col-8">
-                            <input type="datetime" class="form-control" [(ngModel)]="order.date_order" [disabled]="mode==1"/> 
+                            <input type="number" class="form-control" [(ngModel)]="ownerVehicle.owner_id" [disabled]="mode==1"/> 
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-4"><label>Dirección id:</label></div>
+                        <div class="col-4"><label>vehiculo:</label></div>
                         <div class="col-8">
-                            <input type="number" class="form-control" [(ngModel)]="order.address_id" [disabled]="mode==1"/> 
+                            <input type="number" class="form-control" [(ngModel)]="ownerVehicle.vehicle_id" [disabled]="mode==1"/>
                         </div>
-                    </div>
-                    <div class="row mb-1">
-                        <div class="col-4"><label>Ruta id:</label></div>
-                        <div class="col-8">
-                            <input type="number" class="form-control" [(ngModel)]="order.route_id" [disabled]="mode==1"/> 
-                        </div>
-                    </div>
-                    
+                    </div>                   
                     <div class="row">
                         <div class="col-4">
                             
