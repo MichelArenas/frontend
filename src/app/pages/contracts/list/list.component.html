@@ -26,14 +26,16 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Drscripción</th>
-                                    <th>Fecha</th>     
+                                    <th>Fecha</th>
+                                    <th>Cliente</th>     
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let actual of contract">
                                     <td>{{actual.id}}</td>
                                     <td>{{actual.description}}</td>
-                                    <td>{{actual.Date}}</td>
+                                    <td>{{actual.date}}</td>
+                                    <th>{{actual.customer_id}}</th>
                                     <td>
                                         <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                         <button type="button" class="btn btn-warning" (click)="update(actual.id)">Actualizar</button>

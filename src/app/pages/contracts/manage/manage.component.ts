@@ -19,7 +19,8 @@ export class ManageComponent implements OnInit {
     this.contract={
       id:0,
       description:"",
-      date: new Date()
+      date: new Date(),
+      //customer_id:0
     };
   }
 
