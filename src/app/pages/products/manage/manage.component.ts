@@ -29,7 +29,7 @@ export class ManageComponent implements OnInit {
       description: "",
       price: 0,
       cuantity: 0,
-      lot_id: 0,
+      lot_id: null,
       customer_id: null,
     };
   }
@@ -125,7 +125,7 @@ export class ManageComponent implements OnInit {
         0,
         [Validators.required, Validators.min(1), Validators.max(10000)],
       ],
-      lot_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
+      lot_id: [0, [Validators.pattern("^[0-9]+$")]],
       // customer_id: [0, [Validators.pattern("^[0-9]+$")]],
     });
   }
