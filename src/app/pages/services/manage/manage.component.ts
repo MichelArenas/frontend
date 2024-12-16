@@ -20,7 +20,7 @@ export class ManageComponent implements OnInit {
       id:0,
       amount:0,
       date_service:new Date(),
-      administrator_id:0,
+     // administrator_id:null,
       tranch_id:0,
       contract_id:0,
     };
