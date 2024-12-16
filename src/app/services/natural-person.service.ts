@@ -13,32 +13,32 @@ export class NaturalpersonService {
 
   list(): Observable<NaturalPerson[]> {
     return this.http.get<NaturalPerson[]>(
-      `${environment.url_ms_logic}/naturalPeople`
+      `${environment.url_ms_logic}/naturalPeoples`
     );
   }
 
   view(id: number): Observable<NaturalPerson> {
     return this.http.get<NaturalPerson>(
-      `${environment.url_ms_logic}/naturalPeople/${id}`
+      `${environment.url_ms_logic}/naturalPeoples/${id}`
     );
   }
 
   delete(id: number) {
     return this.http.delete<NaturalPerson>(
-      `${environment.url_ms_logic}/naturalPeople/${id}`
+      `${environment.url_ms_logic}/naturalPeoples/${id}`
     );
   }
 
   create(naturalperson: NaturalPerson): Observable<NaturalPerson> {
     return this.http.post<NaturalPerson>(
-      `${environment.url_ms_logic}/naturalPeople`,
+      `${environment.url_ms_logic}/naturalPeoples`,
       naturalperson
     );
   }
 
   update(naturalperson: NaturalPerson): Observable<NaturalPerson> {
     return this.http.put<NaturalPerson>(
-      `${environment.url_ms_logic}/naturalPeople/${naturalperson.id}`,
+      `${environment.url_ms_logic}/naturalPeoples/${naturalperson.id}`,
       naturalperson
     );
   }

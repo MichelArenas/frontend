@@ -1,36 +1,32 @@
+import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Product } from "src/app/models/product.model";
-import { ProductService } from "src/app/services/product.service";
+import { Quota } from "src/app/models/quota.model";
+import { QuotaService } from "src/app/services/quota.service";
 import Swal from "sweetalert2";
 
 @Component({
   selector: "app-manage",
   templateUrl: "./manage.component.html",
-  styleUrls: ["./manage.component.scss"],
+  styleUrls: ["./manage.component.css"],
 })
 export class ManageComponent implements OnInit {
   mode: number; //1->view, 2->Create, 3-> Update
-  products: Product;
+  quotas: Quota;
   theFormGroup: FormGroup;
   trySend: boolean;
-
   constructor(
-    private productsService: ProductService,
+    private quotasService: QuotaService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder
   ) {
-    this.mode = 0;
-    this.products = {
+    this.mode = 1;
+    this.quotas = {
       id: 0,
-      name: "",
-      description: "",
-      price: 0,
-      cuantity: 0,
-      lot_id: null,
-      customer_id: null,
+      payment_date: new Date(),
+      contract_id: 0,
     };
   }
 
@@ -39,34 +35,31 @@ export class ManageComponent implements OnInit {
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
-      this.theFormGroup.get("id").disable();
-      this.theFormGroup.get("name").disable();
-      this.theFormGroup.get("description").disable();
-      this.theFormGroup.get("price").disable();
-      this.theFormGroup.get("cuantity").disable();
-      this.theFormGroup.get("lot_id").disable();
-      // this.theFormGroup.get("customer_id").disable();
+      this.theFormGroup.get("payment_date").disable();
+      this.theFormGroup.get("contract_id").disable();
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
-      this.theFormGroup.get("id").disable();
+      // this.theFormGroup.get("id").disable();
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
-      this.theFormGroup.get("id").disable();
+      // this.theFormGroup.get("id").disable();
     }
     if (this.activateRoute.snapshot.params.id) {
-      this.products.id = this.activateRoute.snapshot.params.id;
-      this.getProduct(this.products.id);
+      this.quotas.id = this.activateRoute.snapshot.params.id;
+      this.getQuota(this.quotas.id);
     }
   }
-  getProduct(id: number) {
-    this.productsService.view(id).subscribe((data) => {
-      this.products = data;
+  getQuota(id: number) {
+    this.quotasService.view(id).subscribe((data) => {
+      this.quotas = data;
+      const datePipe = new DatePipe("en-US");
+      const formattedDate = datePipe.transform(
+        this.quotas.payment_date,
+        "yyyy-MM-dd"
+      );
       this.theFormGroup.patchValue({
-        name: this.products.name,
-        description: this.products.description,
-        price: this.products.price,
-        cuantity: this.products.cuantity,
-        lot_id: this.products.lot_id,
+        payment_date: formattedDate, // Fecha formateada
+        contract_id: this.quotas.contract_id,
       });
     });
   }
@@ -82,9 +75,9 @@ export class ManageComponent implements OnInit {
     if (this.theFormGroup.invalid) {
       Swal.fire("Error", "Por favor llene correctamente los campos", "error");
     } else {
-      this.productsService.create(this.products).subscribe(() => {
+      this.quotasService.create(this.quotas).subscribe(() => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
-        this.router.navigate(["products/list"]);
+        this.router.navigate(["quotas/list"]);
       });
     }
   }
@@ -101,32 +94,18 @@ export class ManageComponent implements OnInit {
     if (this.theFormGroup.invalid) {
       Swal.fire("Error", "Por favor llene correctamente los campos", "error");
     } else {
-      this.productsService.update(this.products).subscribe(() => {
+      this.quotasService.update(this.quotas).subscribe(() => {
         Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["products/list"]);
+        this.router.navigate(["quotas/list"]);
       });
     }
   }
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [this.products.id || ""], // Siempre deshabilitado
-      name: ["", [Validators.required, Validators.pattern("^[a-zA-Z]+$")]],
-      description: ["", [Validators.required]],
-      price: [
-        0,
-        [
-          Validators.required,
-          Validators.min(1),
-          Validators.max(1000000000000000),
-        ],
-      ],
-      cuantity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(10000)],
-      ],
-      lot_id: [0, [Validators.pattern("^[0-9]+$")]],
-      // customer_id: [0, [Validators.pattern("^[0-9]+$")]],
+      // id: [this.quotas.id || ""], // Siempre deshabilitado
+      payment_date: ["", [Validators.required]],
+      contract_id: ["", [Validators.required]],
     });
   }
 
