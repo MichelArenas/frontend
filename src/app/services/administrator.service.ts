@@ -13,38 +13,19 @@ export class AdministratorService {
   constructor(private http: HttpClient) {}
 
   // Observable es una clase que permite manejar eventos asincronos
-  list(): Observable<Administrator[]> {
-    return this.http.get<Administrator[]>(
-      `${environment.url_ms_logic}/administrators`
-    );
+  list(): Observable<Administrator[]> { 
+    return this.http.get<Administrator[]>(`${environment.url_ms_logic}/administrators`); 
   }
-
-  view(id: number): Observable<Administrator> {
-    // Listar un solo teatro
-    return this.http
-      .get<Administrator>(`${environment.url_ms_logic}/administrators/${id}`)
-      .pipe(
-        tap((data) => console.log("Datos recibidooooos:", data)) // Imprimir los datos recibidos
-      );
+  delete(id:number) {
+    return this.http.delete<Administrator>(`${environment.url_ms_logic}/administrators/${id}`);
   }
-  
-  delete(id: number) {
-    return this.http.delete<Administrator>(
-      `${environment.url_ms_logic}/administrators/${id}`
-    );
+  view(id:number): Observable<Administrator> {
+    return this.http.get<Administrator>(`${environment.url_ms_logic}/administrators/${id}`);
   }
-
   create(Administrator: Administrator): Observable<Administrator> {
-    return this.http.post<Administrator>(
-      `${environment.url_ms_logic}/administrators`,
-      Administrator
-    );
+    return this.http.post<Administrator>(`${environment.url_ms_logic}/administrators`,Administrator);
   }
-
   update(Administrator: Administrator): Observable<Administrator> {
-    return this.http.put<Administrator>(
-      `${environment.url_ms_logic}/administrators/${Administrator.id}`,
-      Administrator
-    );
+    return this.http.put<Administrator>(`${environment.url_ms_logic}/administrators/${Administrator.id}`,Administrator);
   }
 }

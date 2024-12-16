@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AdministratorsRoutingModule } from './administrators-routing.module';
+import { OwnerVehiclesRoutingModule } from './owner-vehicles-routing.module';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
 import { FormsModule } from '@angular/forms';
@@ -14,8 +14,8 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    AdministratorsRoutingModule,
+    OwnerVehiclesRoutingModule,
     FormsModule
   ]
 })
-export class AdministratorsModule { }
+export class OwnerVehiclesModule { }

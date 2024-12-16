@@ -19,7 +19,9 @@ export class ManageComponent implements OnInit {
     this.order={
       id:0,
       type:"",
-      date_order: new Date()
+      date_order: new Date(),
+      address_id:0,
+      route_id:0
     };
   }
 

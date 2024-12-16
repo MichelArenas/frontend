@@ -17,19 +17,27 @@
                     <div class="row mb-1">
                         <div class="col-4"><label>Id:</label></div>
                         <div class="col-8">
-                            <input type="text" class="form-control" [(ngModel)]="owners.id" disabled/>
+                            <input type="text" class="form-control" [(ngModel)]="ownerVehicle.id" disabled/>
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-4"><label>usuario id:</label></div>
+                        <div class="col-4"><label>Fecha de asignación:</label></div>
                         <div class="col-8">
-                            <input type="text" class="form-control" [(ngModel)]="owners.user_id" disabled/>
-                            <input type="text" class="form-control" [(ngModel)]="owners.name" placeholder="Nombre"/> 
-                            <input type="text" class="form-control" [(ngModel)]="owners.email" placeholder="Correo electrónico"/> 
-                            <input type="text" class="form-control" [(ngModel)]="owners.password" placeholder="Contraseña"/> 
-
+                            <input type="date" class="form-control" [(ngModel)]="ownerVehicle.assignment_date" [disabled]="mode==1"/>
                         </div>
                     </div>
+                    <div class="row mb-1">
+                        <div class="col-4"><label>Propietario:</label></div>
+                        <div class="col-8">
+                            <input type="number" class="form-control" [(ngModel)]="ownerVehicle.owner_id" [disabled]="mode==1"/> 
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-4"><label>vehiculo:</label></div>
+                        <div class="col-8">
+                            <input type="number" class="form-control" [(ngModel)]="ownerVehicle.vehicle_id" [disabled]="mode==1"/>
+                        </div>
+                    </div>                   
                     <div class="row">
                         <div class="col-4">
                             

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Contract } from 'src/app/models/contract.model';
-import { ContractService } from 'src/app/services/contract.service';
+import { OwnerVehicles } from 'src/app/models/owner-vehicles.model';
+import { OwnerVehiclesService } from 'src/app/services/owner-vehicles.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,16 +11,16 @@ import Swal from 'sweetalert2';
 })
 export class ManageComponent implements OnInit {
   mode:number //mode=1 -> View, mode=2 -> create, mode=3-> update
-  contract:Contract
+  ownerVehicle:OwnerVehicles
   constructor(private activatedRoute:ActivatedRoute, 
-    private contractService:ContractService,
+    private ownerVehicleService:OwnerVehiclesService,
     private router:Router) { 
     this.mode=1;
-    this.contract={
+    this.ownerVehicle={
       id:0,
-      description:"",
-      date: new Date(),
-      //customer_id:0
+      assignment_date:new Date(),
+      owner_id:0,
+      vehicle_id:0,
     };
   }
 
@@ -34,14 +34,14 @@ export class ManageComponent implements OnInit {
       this.mode = 3;
     }
     if(this.activatedRoute.snapshot.params.id){
-      this.contract.id = this.activatedRoute.snapshot.params.id
-      this.getVehicle(this.contract.id)
+      this.ownerVehicle.id = this.activatedRoute.snapshot.params.id
+      this.getownerVehicle(this.ownerVehicle.id)
     }
   }
-  getVehicle(id:number){
-    this.contractService.view(id).subscribe(data=>{
-      this.contract=data //El JSON corresponde a un dato
-      console.log("Contrato"+JSON.stringify(this.contract))
+  getownerVehicle(id:number){
+    this.ownerVehicleService.view(id).subscribe(data=>{
+      this.ownerVehicle=data //El JSON corresponde a un dato
+      console.log("Vehiculo"+JSON.stringify(this.ownerVehicle))
     })
   }
 
@@ -55,9 +55,9 @@ export class ManageComponent implements OnInit {
     }).then((result) => {
       /*Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.contractService.create(this.contract).subscribe(data =>{
+        this.ownerVehicleService.create(this.ownerVehicle).subscribe(data =>{
           Swal.fire("guardados!", "Se ha creado correctamente", "success");
-          this.router.navigate(["contracts/list"])
+          this.router.navigate(["ownerVehicles/list"])
         })
       } else if (result.isDenied) {
         Swal.fire("Los cambios no se guardaron", "", "info");
@@ -74,14 +74,13 @@ export class ManageComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.contractService.update(this.contract).subscribe(data =>{
+        this.ownerVehicleService.update(this.ownerVehicle).subscribe(data =>{
           Swal.fire("guardados!", "Se ha actualizado correctamente", "success");
-          this.router.navigate(["contracts/list"])
+          this.router.navigate(["Vehicles/list"])
         })
       } else if (result.isDenied) {
         Swal.fire("Los cambios no se guardaron", "", "info");
       }
     });
   }
-
 }

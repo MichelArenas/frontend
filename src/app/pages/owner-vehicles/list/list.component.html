@@ -10,7 +10,7 @@
                 <div class="card-header bg-trasparent">
                     <div class="row">
                         <div class="col-3">
-                            <h3 class="mb-0">Contratos</h3>
+                            <h3 class="mb-0">Vehículos-Propietario</h3>
                         </div>
                         <div class="col-6">
                         </div>
@@ -25,17 +25,18 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Drscripción</th>
-                                    <th>Fecha</th>
-                                    <th>Cliente</th>     
+                                    <th>Fecha de asignación</th>
+                                    <th>Propietario</th>
+                                    <th>vehiculo</th>
+                                    <th>Opciones</th>     
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let actual of contract">
+                                <tr *ngFor="let actual of ownerVehicle">
                                     <td>{{actual.id}}</td>
-                                    <td>{{actual.description}}</td>
-                                    <td>{{actual.date}}</td>
-                                    <th>{{actual.customer_id}}</th>
+                                    <td>{{actual.assignment_date}}</td>
+                                    <td>{{actual.owner_id}}</td>
+                                    <td>{{actual.vehicle_id}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                         <button type="button" class="btn btn-warning" (click)="update(actual.id)">Actualizar</button>
@@ -50,3 +51,4 @@
         </div>
     </div>
 </div>
+

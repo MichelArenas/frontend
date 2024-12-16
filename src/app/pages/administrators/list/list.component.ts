@@ -25,28 +25,42 @@ export class ListComponent implements OnInit {
     })
   }
   delete(id:number){
-    Swal.fire({ 
-      title: 'Eliminar Operación', 
-      text: "Está seguro que quiere eliminar la Operación?", 
-      icon: 'warning', 
-      showCancelButton: true, 
-      confirmButtonColor: '#3085d6', 
-      cancelButtonColor: '#d33', 
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText:'No, Cancelar'
-      }).then((result) => { 
-      if (result.isConfirmed) { 
-      this.adminService.delete(id). 
-      subscribe(data => { 
-      Swal.fire( 
-      'Eliminado!', 
-      'La Operación ha sido eliminada correctamente', 
-      'success'
-      ) 
-      this.ngOnInit();
-      }); 
-      } 
-      }) 
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: "¿Está seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, bórralo!",
+      cancelButtonText: "No, cancelar!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.adminService.delete(id). 
+    subscribe(data =>{
+        swalWithBootstrapButtons.fire({
+          title: "Eliminado!",
+          text: "Su registro ha sido eliminado.",
+          icon: "success"
+        })})
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelado",
+          text: "Tu registro está seguro :)",
+          icon: "error"
+        });
+      }
+      this.ngOnInit();//
+    });  
   }
   update(id:number){
     this.router.navigate(["administrators/update/"+id])
@@ -58,4 +72,5 @@ export class ListComponent implements OnInit {
   create(){
     this.router.navigate(["administrators/create"])
   }
+
 }
