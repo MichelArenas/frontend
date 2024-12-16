@@ -33,8 +33,8 @@ import { ManageComponent } from './pages/OwnerVehicle/manage/manage.component';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    ListComponent,
-    ManageComponent
+   ListComponent,
+   ManageComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
