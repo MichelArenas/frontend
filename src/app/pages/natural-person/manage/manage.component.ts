@@ -7,7 +7,7 @@ import { NaturalPerson } from "src/app/models/natural-person.model";
 import { NaturalpersonService } from "src/app/services/natural-person.service";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-manage",
@@ -25,12 +25,16 @@ export class ManageComponent implements OnInit {
     private router: Router,
     private naturalpersonService: NaturalpersonService,
     private theFormBuilder: FormBuilder
-
   ) {
     this.mode = 1;
     this.naturalperson = {
       id: 0,
-      user_id: 0
+      user_id: "",
+      document_type: "",
+      document_number: "",
+      born_date: new Date(),
+      company_id: null,
+      customer_id: null,
     };
   }
 
@@ -41,6 +45,11 @@ export class ManageComponent implements OnInit {
     if (currentUrl.includes("view")) {
       this.mode = 1;
       this.theFormGroup.get("user_id").disable();
+      this.theFormGroup.get("document_type").disable();
+      this.theFormGroup.get("document_number").disable();
+      this.theFormGroup.get("born_date").disable();
+      // this.theFormGroup.get("company_id").disable();
+      // this.theFormGroup.get("customer_id").disable();
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
     } else if (currentUrl.includes("update")) {
@@ -64,7 +73,7 @@ export class ManageComponent implements OnInit {
     console.log(JSON.stringify(this.naturalperson));
     this.naturalpersonService.create(this.naturalperson).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
-      this.router.navigate(["people/list"]);
+      this.router.navigate(["naturalPeoples/list"]);
     });
   }
 
@@ -80,16 +89,26 @@ export class ManageComponent implements OnInit {
     console.log(JSON.stringify(this.naturalperson));
     this.naturalpersonService.update(this.naturalperson).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
-      this.router.navigate(["people/list"]);
+      this.router.navigate(["naturalPeoples/list"]);
     });
   }
 
   getPerson(id: number) {
     this.naturalpersonService.view(id).subscribe((data) => {
       this.naturalperson = data;
+      const datePipe = new DatePipe("en-US");
+      const formattedDate = datePipe.transform(
+        this.naturalperson.born_date,
+        "yyyy-MM-dd"
+      );
       this.theFormGroup.patchValue({
         // id: this.naturalperson.id,
         user_id: this.naturalperson.user_id,
+        document_type: this.naturalperson.document_type,
+        document_number: this.naturalperson.document_number,
+        born_date: formattedDate, // Fecha formateada
+        // company_id: this.naturalperson.company_id,
+        // customer_id: this.naturalperson.customer_id,
       });
     });
   }
@@ -101,7 +120,11 @@ export class ManageComponent implements OnInit {
         "",
         [Validators.required, Validators.pattern("^[a-zA-Z0-9]+$")],
       ],
-
+      document_type: ["", [Validators.required]],
+      document_number: ["", [Validators.required]],
+      born_date: ["", [Validators.required]],
+      // company_id: [null, [Validators.required]],
+      // customer_id: [null, [Validators.required]],
     });
   }
   get getTheFormGroup() {
