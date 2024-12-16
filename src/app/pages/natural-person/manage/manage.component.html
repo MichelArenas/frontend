@@ -22,14 +22,74 @@
               </div>
             </div>
             <br />
-            <!-- Campo numero documento -->
+            <!-- Campo tipo documento -->
             <div class="row">
               <div class="col-4">
-                <label>ID de usuario:</label>
+                <label>Tipo documento:</label>
               </div>
               <div class="col-8">
                 <input
-                  type="number"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="naturalperson.document_type"
+                  [disabled]="mode == 1"
+                  formControlName="document_type"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.document_type.errors &&
+                    (getTheFormGroup.document_type.dirty ||
+                      getTheFormGroup.document_type.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.document_type.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+            <!-- Campo numero documento -->
+            <div class="row">
+              <div class="col-4">
+                <label>Documento:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="naturalperson.document_number"
+                  [disabled]="mode == 1"
+                  formControlName="document_number"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.document_number.errors &&
+                    (getTheFormGroup.document_number.dirty ||
+                      getTheFormGroup.document_number.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.document_number.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+            <!-- Campo Usuario -->
+            <div class="row">
+              <div class="col-4">
+                <label>Id de Usuario:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
                   class="form-control"
                   [(ngModel)]="naturalperson.user_id"
                   [disabled]="mode == 1"
@@ -52,6 +112,66 @@
               </div>
             </div>
             <br />
+            <!-- Campo cliente -->
+            <div class="row">
+              <div class="col-4">
+                <label>Cliente_id:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="naturalperson.customer_id"
+                  [disabled]="mode == 1"
+                />
+              </div>
+            </div>
+            <br />
+            <!-- Campo compañía -->
+            <div class="row">
+              <div class="col-4">
+                <label>Compañía id:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="naturalperson.company_id"
+                  [disabled]="mode == 1"
+                />
+              </div>
+            </div>
+            <br />
+            <!-- Campo cumpleaños -->
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha de nacimiento:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="naturalperson.born_date"
+                  [disabled]="mode == 1"
+                  formControlName="born_date"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.born_date.errors &&
+                    (getTheFormGroup.born_date.dirty ||
+                      getTheFormGroup.born_date.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.born_date.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />>
             <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
