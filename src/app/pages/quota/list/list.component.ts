@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Quota } from "src/app/models/quota.model";
+import { QuotaService } from "src/app/services/quota.service";
 import Swal from "sweetalert2";
-
-//Importaciones de la clase
-import { NaturalPerson } from "src/app/models/natural-person.model";
-import { NaturalpersonService } from "src/app/services/natural-person.service";
 
 @Component({
   selector: "app-list",
@@ -12,10 +10,9 @@ import { NaturalpersonService } from "src/app/services/natural-person.service";
   styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
-  naturalpeople: NaturalPerson[];
-
-  constructor(private service: NaturalpersonService, private router: Router) {
-    this.naturalpeople = [];
+  quotas: Quota[];
+  constructor(private service: QuotaService, private router: Router) {
+    this.quotas = [];
   }
 
   ngOnInit(): void {
@@ -23,28 +20,28 @@ export class ListComponent implements OnInit {
   }
 
   view(id: number) {
-    this.router.navigate(["people/view/" + id]);
+    this.router.navigate(["quotas/view/" + id]);
   }
 
   update(id: number) {
-    this.router.navigate(["people/update/" + id]);
+    this.router.navigate(["quotas/update/" + id]);
   }
 
   list(): void {
     this.service.list().subscribe((data) => {
       console.log(data);
-      this.naturalpeople = data;
+      this.quotas = data;
     });
   }
 
   create() {
-    this.router.navigate(["people/create"]);
+    this.router.navigate(["quotas/create"]);
   }
 
   delete(id: number) {
     Swal.fire({
-      title: "Eliminar Persona Natural",
-      text: "¿Estas seguro de eliminar la Persona Natural?",
+      title: "Eliminar quota",
+      text: "¿Estas seguro de eliminar la quota?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

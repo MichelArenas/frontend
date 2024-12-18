@@ -28,7 +28,7 @@ export class ManageComponent implements OnInit {
     this.customer = {
       id: 0,
       company_id: 0,
-      person_id: 0
+      person_id: 0,
     };
   }
 
@@ -57,6 +57,14 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    if (this.theFormGroup.invalid) {
+      Swal.fire(
+        "Error",
+        "Formulario inválido. Por favor, verifica los campos.",
+        "error"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.customer));
     this.customerService.create(this.customer).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); // tirulo a la alerta
@@ -65,6 +73,14 @@ export class ManageComponent implements OnInit {
   }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      Swal.fire(
+        "Error",
+        "Formulario inválido. Por favor, verifica los campos.",
+        "error"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.customer));
     this.customerService.update(this.customer).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); // titulo a la alerta
@@ -78,7 +94,7 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.patchValue({
         id: this.customer.id,
         company_id: this.customer.company_id,
-        person_id: this.customer.person_id
+        person_id: this.customer.person_id,
       });
     });
   }
@@ -90,8 +106,16 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       id: [this.customer.id || ""],
-      company_id: [this.customer.company_id || "", Validators.required, Validators.pattern("^[0-9]*$")],
-      person_id: [this.customer.person_id || "", Validators.required, Validators.pattern("^[0-9]*$")]
+      company_id: [
+        this.customer.company_id || "",
+        Validators.required,
+        Validators.pattern("^[0-9]*$"),
+      ],
+      person_id: [
+        this.customer.person_id || "",
+        Validators.required,
+        Validators.pattern("^[0-9]*$"),
+      ],
     });
   }
 

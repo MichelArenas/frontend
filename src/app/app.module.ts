@@ -12,6 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { SecondFAComponent } from './pages/second-fa/second-fa.component';
 
 
 
@@ -32,6 +34,8 @@ import { ComponentsModule } from './components/components.module';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    ResetPasswordComponent,
+    SecondFAComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SecurityService {
 
-  theUser = new BehaviorSubject<User>(new User);
+  theUser = new BehaviorSubject<User>(new User);//Variable global
   constructor(private http: HttpClient) { 
     this.verifyActualSession()
   }
@@ -24,20 +24,32 @@ export class SecurityService {
   login(user: User): Observable<any> {
     return this.http.post<any>(`${environment.url_ms_security}/api/public/security/login`, user);
   }
+  resetPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${environment.url_ms_security}/api/public/security/resetPassword`, { email });
+  }
+
+  verify2FA(email: string, token2FA: string): Observable<any> {
+    return this.http.post<any>(`${environment.url_ms_security}/api/public/security/login-2FA`, { email, token2FA });
+  }
+
+  
   /*
   Guardar la información de usuario en el local storage
   */
   saveSession(dataSesion: any) {
-    let data: User = {
-      _id: dataSesion["user"]["_id"],
-      name: dataSesion["user"]["name"],
-      email: dataSesion["user"]["email"],
-      password: "",
-     // role:dataSesion["user"]["role"],
-      token: dataSesion["token"]
-    };
-    localStorage.setItem('sesion', JSON.stringify(data));
-    this.setUser(data);
+    if (dataSesion.token) { // Token definitivo después del 2FA
+      let data: User = {
+        _id: dataSesion["user"]["_id"],
+        name: dataSesion["user"]["name"],
+        email: dataSesion["user"]["email"],
+        password: "",
+        token: dataSesion["token"]
+      };
+      localStorage.setItem('sesion', JSON.stringify(data));
+      this.setUser(data);
+    } else {
+      console.warn('Sesión temporal almacenada. Falta completar el 2FA.');
+    }
   }
   /**
     * Permite actualizar la información del usuario
@@ -100,4 +112,19 @@ export class SecurityService {
     let sesionActual = localStorage.getItem('sesion');
     return sesionActual;
   }
+
 }
+/*
+saveSession(dataSesion: any) {
+    let data: User = {
+      _id: dataSesion["user"]["_id"],
+      name: dataSesion["user"]["name"],
+      email: dataSesion["user"]["email"],
+      password: "",
+     // role:dataSesion["user"]["role"],
+      token: dataSesion["token"]
+    };
+    localStorage.setItem('sesion', JSON.stringify(data));
+    this.setUser(data);
+  }
+*/ 
