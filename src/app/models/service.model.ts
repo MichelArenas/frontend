@@ -1,3 +1,5 @@
+import { Spent } from "./spent.model";
+
 export class Service {
     id?:number;
     amount:number;
@@ -5,5 +7,6 @@ export class Service {
     //administrator_id: null; //Administrador debe de existir
     tranch_id: number; //Tramo debe de existir  
     contract_id: number; //Contrato debe de existir
+  
 
 }
