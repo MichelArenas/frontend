@@ -127,6 +127,10 @@ export const AdminLayoutRoutes: Routes = [
         loadChildren: () => import('src/app/pages/').then(m => m.PaymentModule)
     },*/
     {
+      path: "quotas", //Path que carga la pagina
+      loadChildren: () => import("src/app/pages/quota/quota.module").then((m) => m.QuotaModule),
+    },
+    {
         path: "naturalPeoples", //Path que carga la pagina
         canActivate:[AuthGuard],
         loadChildren: () => import('src/app/pages/natural-person/natural-person.module').then(m => m.NaturalPersonModule)

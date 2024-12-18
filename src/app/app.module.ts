@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthGuard } from './guards/auth.guard';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { SecondFAComponent } from './pages/second-fa/second-fa.component';
 
 
 
@@ -34,6 +36,8 @@ import { AuthGuard } from './guards/auth.guard';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    ResetPasswordComponent,
+    SecondFAComponent,
   ],
   
   providers: [AuthGuard, {
