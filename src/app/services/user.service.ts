@@ -1,57 +1,49 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { User } from '../models/user.model';
-import { Profile } from '../models/profile.model';
-
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
+import { Role } from "../models/role.model";
+import { User } from "../models/user.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class UserService {
-
-  constructor(private http:HttpClient) { }
-
-  
-  list(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.url_ms_security}/Users`);
+  baseUrl: string;
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.url_ms_security}/users`;
+  }
+  view(id: string): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/${id}`);
   }
 
-  findByEmail(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.url_ms_security}/Users/email`, user);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl);
   }
 
-  view(id: String): Observable<User> {
-    return this.http.get<User>(`${environment.url_ms_security}/Users/${id}`);
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/${id}`);
   }
 
-  create(theUser: User): Observable<User> {
-    return this.http.post<User>(`${environment.url_ms_security}/Users`, theUser)
+  create(user: User): Observable<User> {
+    return this.http.post<User>(this.baseUrl, user);
   }
 
-  update(theUser: User): Observable<User> {
-    return this.http.put<User>(`${environment.url_ms_security}/Users/${theUser._id}`, theUser);
-  }
-  delete(id: String) {
-    return this.http.delete<User>(`${environment.url_ms_security}/Users/${id}`);
-  }
-  getProfile(id:String): Observable<Profile> {
-    return this.http.get<Profile>(`${environment.url_ms_security}/profiles/${id}`);
-  }
-  
-  createProfile(id:String, theProfile: Profile): Observable<Profile> {
-    return this.http.post<Profile>(`${environment.url_ms_security}/profiles/Users/${id}`, theProfile);
+  update(user: User): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/${user._id}`, user);
   }
 
-
-  updateProfile(id:String, theProfile: Profile): Observable<Profile> {
-    return this.http.put<Profile>(`${environment.url_ms_security}/profiles/Users/${id}`, theProfile);
-  }
-  
-  deleteProfile(id: String) {
-    return this.http.delete<Profile>(`${environment.url_ms_security}/profiles/${id}`);
+  delete(id: string): Observable<User> {
+    return this.http.delete<User>(`${this.baseUrl}/${id}`);
   }
 
-
+  matchRole(user: User, role: Role): Observable<User> {
+    return this.http.put<User>(
+      `${this.baseUrl}/${user._id}/role/${role._id}`,
+      null
+    );
+  }
+ getUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/email/${email}`);
+  }
 }
