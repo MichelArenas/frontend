@@ -1,78 +1,125 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VehiclesDriver } from 'src/app/models/vehicles-driver.model';
 import { VehiclesDriverService } from 'src/app/services/vehicles-driver.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: "app-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
-  vehicledriver:VehiclesDriver[]
-  constructor(private vehicledriverService:VehiclesDriverService, private router:Router) {
-    this.vehicledriver=[]
- 
-   }
+  vehicledriver: VehiclesDriver[];
+  driver_id:number
+  vehicle_id:number
+  constructor(private service: VehiclesDriverService, private router: Router, private activateRoute: ActivatedRoute) {
+    this.vehicledriver = [];
+  }
+
+  //este es el primero que se llama igual que contructor pero cuando hay cambios en los componentes
 
   ngOnInit(): void {
-    this.list()
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    
+    // Reiniciar municipality_id y vehicle_id
+    this.driver_id = null;
+    this.vehicle_id = null;
+  
+    // Verificar si estamos filtrando por municipio
+    if (currentUrl.includes('filterByDriver')) {
+      this.driver_id = +this.activateRoute.snapshot.params['id'];
+      console.log("driver_id:", this.driver_id);
+      this.filterByDriver();
+      console.log("vehicle_id:", this.vehicle_id);
+      
+
+    } 
+    // Verificar si estamos filtrando por vehiculo
+    else if (currentUrl.includes('filterByVehicle')) {
+      this.vehicle_id = +this.activateRoute.snapshot.params['id'];
+      console.log("vehicle_id:", this.vehicle_id);
+      this.filterByVehicle();
+      console.log("driver_id:", this.driver_id);
+      
+    } 
+    // Si no hay filtro específico, listar todos las operaciones
+    else {
+      this.list();
+    }
   }
 
-  list(){
-    this.vehicledriverService.list().subscribe(data=>{
-      this.vehicledriver=data
-      console.log(JSON.stringify(this.vehicledriver))
-    })
-    //
-  }
-  create(){
-    this.router.navigate(["VehiclesDriver/create"])
-  }
-  view(id:number){
-    this.router.navigate(["VehiclesDriver/view/"+id])
-  }
-  update(id:number){
-    this.router.navigate(["VehiclesDriver/update/"+id])
-  }
-  delete(id:number){
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger"
-        },
-        buttonsStyling: false
-      });
-      swalWithBootstrapButtons.fire({
-        title: "¿Está seguro?",
-        text: "¡No podrás revertir esto!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí, bórralo!",
-        cancelButtonText: "No, cancelar!",
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.vehicledriverService.delete(id). 
-      subscribe(data =>{
-          swalWithBootstrapButtons.fire({
-            title: "Eliminado!",
-            text: "Su registro ha sido eliminado.",
-            icon: "success"
-          })})
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire({
-            title: "Cancelado",
-            text: "Tu registro está seguro :)",
-            icon: "error"
-          });
-        }
-        this.ngOnInit();//
-      }); 
+  view(id: number) {
+    console.log("aqui estoy en view");
+
+    this.router.navigate(["VehiclesDriver/view/" + id]);
   }
 
+  update(id: number) {
+    this.router.navigate(["VehiclesDriver/update/" + id]);
+  }
+
+  list(): void {
+    this.service.list().subscribe((data) => {
+      this.vehicledriver = data;
+      //console.log(JSON.stringify(data["data"]));
+    });
+  }
+
+  create() {
+    this.router.navigate(["VehiclesDriver/create"]);
+  }
+
+  delete(id: number) {
+    Swal.fire({
+      title: "Eliminar vehicledriver",
+      text: "¿Estas seguro de eliminar el vehicledriver?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!",
+      cancelButtonText: "No, Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.service.delete(id).subscribe((data) => {
+          Swal.fire(
+            "Eliminado!",
+            "El vehicledriver ha sido eliminado.",
+            "success"
+          );
+
+          this.ngOnInit();
+        });
+      }
+    });
+  }
+  
+  //Funcion para filtrar por municipio
+  filterByDriver(){
+    this.service.listByDriver(this.driver_id).subscribe((data) => {
+      this.vehicledriver = data;
+      console.log(this.vehicledriver);
+    });
+  }
+  //funcion para crear una operacion segun un municipio
+
+  createForDriver() {
+    this.router.navigate(["VehiclesDriver/createForDriver", this.driver_id]);
+    console.log("aqui estoy en createForOwner", this.driver_id);
+  }
+
+  //Funcion para filtrar por vehiculo
+  filterByVehicle(){
+    this.service.listByVehicle(this.vehicle_id).subscribe((data) => {
+      this.vehicledriver = data;
+      console.log(this.vehicledriver);
+    });
+  }
+
+  //funcion para crear una operacion segun un vehiculo
+  createForVehicle() {
+    this.router.navigate(["VehiclesDriver/createForVehicle", this.vehicle_id]);
+    console.log("aqui estoy en createForVehicle", this.vehicle_id);
+  }
 }
