@@ -25,6 +25,15 @@ export class ExpenseService {
   update(thetravelExpenses: Expense): Observable<Expense> {
     return this.http.put<Expense>(`${environment.url_ms_logic}/travelExpenses/${thetravelExpenses.id}`,thetravelExpenses);
   }
- }
+
+  getExpenses(): Observable<Expense[]> {
+    return this.http.get<Expense[]>(`${environment.url_ms_logic}/travelExpenses`);
+  }
+}
+
+ 
+
+ 
+ 
 
 
